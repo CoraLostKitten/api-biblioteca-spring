@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 //para elegir nombre de nuestra table
 @Table(name = "ejemplares")
-public class Ejemplar {
+public class  Ejemplar {
     //atributos (campos de la table)
     //PK de la tabla con la etiqueta @Id
     @Id

@@ -31,8 +31,4 @@ public class AutorController {
     public ResponseEntity<Autor> create(@RequestBody Autor autor) {
         return ResponseEntity.status(HttpStatus.CREATED).body(autorRepository.save(autor));
     }
-
-
-
-
 }

@@ -73,7 +73,7 @@ public class LibroController {
         return ResponseEntity.notFound().build();
     }
 
-    // 6. GET /libros/buscar (Corregido a Page para coincidir con tu Repositorio)
+    // 6. GET /libros/buscar
     @GetMapping("/buscar")
     public ResponseEntity<Page<Libro>> buscarPorTitulo(
             @RequestParam String titulo,
@@ -83,15 +83,17 @@ public class LibroController {
     }
 
     // 7. GET /libros/por-fecha
-    @GetMapping("/por-fecha")
+    @GetMapping("/filtro-fecha/{fecha}")
     public ResponseEntity<Page<Libro>> buscarPorFecha(
-            @RequestParam LocalDate fecha,
+            @PathVariable LocalDate fecha,
             Pageable pageable) {
-        return ResponseEntity.ok(libroRepository.findByFechaPublicacion(fecha, pageable));
+
+        Page<Libro> libros = libroRepository.findByFechaPublicacion(fecha, pageable);
+        return ResponseEntity.ok(libros);
     }
 
     // 8. POST añadir autor
-    @PostMapping("/{libroId}/autor/{autorId}")
+    @PostMapping("/{libroId}/autores/{autorId}")
     @Transactional
     public ResponseEntity<Libro> añadirAutor(@PathVariable Long libroId, @PathVariable Long autorId) {
         Libro libro = libroRepository.findById(libroId)
@@ -104,7 +106,7 @@ public class LibroController {
     }
 
     // 9. DELETE quitar autor
-    @DeleteMapping("/{libroId}/autor/{autorId}")
+    @DeleteMapping("/{libroId}/autores/{autorId}")
     @Transactional
     public ResponseEntity<Void> quitarAutor(@PathVariable Long libroId, @PathVariable Long autorId) {
         Libro libro = libroRepository.findById(libroId)
